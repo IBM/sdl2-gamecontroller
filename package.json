@@ -1,0 +1,27 @@
+{
+  "name": "sdl2-gamecontroller",
+  "version": "1.0.0",
+  "scripts": {
+    "install": "cmake-js compile"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "bluebird": "^3.7.2",
+    "cmake-js": "^5",
+    "node-addon-api": "^3"
+  },
+  "description": "Game controller support for nodejs `EventEmitter` backed by SDL",
+  "homepage": "https://github.com/IBM/sdl2-gamecontroller#readme",
+  "main": "index.js",
+  "repository": "https://github.com/IBM/sdl2-gamecontroller.git",
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "SDL2",
+    "gamecontroller",
+    "dualshock"
+  ],
+  "author": "David Nixon",
+  "license": "apache-2.0"
+}

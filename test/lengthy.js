@@ -1,36 +1,4 @@
-# sdl2-gamecontroller
-
-Game controller support for nodejs `EventEmitter` backed by [SDL2](https://www.libsdl.org/).
-
-# Installation
-
-Install sdl2 and cmake. See [prerequisites](#Prerequisites)
-
-```sh
-yarn add sdl2-gamecontroller
-```
-
-```sh
-npm install sdl2-gamecontroller
-```
-
-# Using the library
-
-## Hello world
-
-```js
-const gamecontroller = require("sdl2-gamecontroller");
-
-gamecontroller.on("error", (data) => console.log("error", data));
-gamecontroller.on("warning", (data) => console.log("warning", data));
-gamecontroller.on("sdl-init", () => console.log("SDL2 Initialized"));
-gamecontroller.on("a:down", (data) => console.log("Hello A button world"));
-```
-
-## Lengthy example
-
-```js
-const gamecontroller = require("sdl2-gamecontroller");
+const gamecontroller = require("../index");
 
 gamecontroller.on("error", (data) => console.log("error", data));
 gamecontroller.on("warning", (data) => console.log("warning", data));
@@ -96,14 +64,33 @@ gamecontroller.on("leftstick:down", (data) => {
 });
 
 // Axis motion
-gamecontroller.on("controller-axis-motion", (data) =>
-  console.log("axis motion", data)
-);
+// gamecontroller.on("controller-axis-motion", (data) => {
+//   console.log("axis motion", data);
+// });
 
 // Sensor updated
 gamecontroller.on("controller-sensor-update", (data) =>
   console.log("sensor update", data)
 );
+
+gamecontroller.on("accelerometer:enabled", (data) =>
+  console.log("accelerometer:enabled", data)
+);
+
+// Touchpad
+gamecontroller.on("controller-touchpad-down", (data) =>
+  console.log("controller-touchpad-down", data)
+);
+
+gamecontroller.on("controller-touchpad-up", (data) =>
+  console.log("controller-touchpad-up", data)
+);
+
+gamecontroller.on("controller-touchpad-motion", (data) =>
+  console.log("controller-touchpad-motion", data)
+);
+
+gamecontroller.on("led", (data) => console.log("LEDS set", data));
 
 // Respond to both up & down events
 gamecontroller.on("leftshoulder", (data) =>
@@ -113,57 +100,6 @@ gamecontroller.on("leftshoulder", (data) =>
 // Print information abour a pressed button
 gamecontroller.on("controller-button-down", (data) =>
   console.log("button pressed", data)
-```
+);
 
-# API Docs
-
-Full docs for the events and the functions calls
-[API doc](docs/API.md)
-
-# Prerequisites
-
-NOTE: If you need rumble, LED, touchpad, gyroscope, or accelerometer support, you need SDL 2.0.16+ which seems not to be avalailable form the Ubunutu/Red Hat repos.
-
-## Linux **Red Hat**
-
-```sh
-sudo dnf install -y gcc-c++ cmake make
-# You may need to enable the powertool repo
-# dnf -y install dnf-plugins-core
-# dnf config-manager --set-enabled powertools
-sudo dnf install -y SDL2-devel
-```
-
-## Linux **Ubuntu**
-
-```sh
-sudo apt install -y build-essential cmake libsdl2-dev
-```
-
-## OSX
-
-[install Homebrew](https://brew.sh/)
-
-```sh
-xcode-select --install
-brew install sdl2
-```
-
-## Linux - Latest SDL on Linux from Homebrew
-
-[install Homebrew](https://brew.sh/)
-install git `dnf install -y git` or `apt install git`
-
-```sh
-brew install sdl2
-```
-
-## Lastest SDL fron source (OPTIONAL)
-
-The version available from Hombrew is generally very recent so if you are dissatisfied with the version
-
-In this case, you can [install from source](https://wiki.libsdl.org/Installation) with the instructions on the SDL2 wiki.
-
-## Windows
-
-I do not know if this works on Windows. If you get this working, please open a PR for changes to this doc and the code.
+gamecontroller.on("back", (data) => process.exit(0));
