@@ -13,13 +13,14 @@ include_directories(SYSTEM "${SDL2_PARENT_DIR}")
 include_directories(SYSTEM ${CMAKE_JS_INC})
 message(STATUS "Found Node in ${CMAKE_JS_INC}") 
 
-# Add napi
-if (NOT NAPI_INC)
-  set(NAPI_INC ${PROJECT_SOURCE_DIR}/node_modules/node-addon-api)
-endif()
-# node_modules/node-addon-api/napi.h
-message(STATUS "Found napi in ${NAPI_INC}")
-include_directories(SYSTEM ${NAPI_INC})
+# Include node-addon-api wrappers
+execute_process(COMMAND node -p "require('node-addon-api').include"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE NODE_ADDON_API_DIR
+        )
+string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+include_directories(SYSTEM ${NODE_ADDON_API_DIR})
 add_definitions(-DNAPI_VERSION=3)
 
 #
