@@ -1,4 +1,3 @@
-/* copyright 2021 IBM */
 #include "sdlgamecontroller.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_gamecontroller.h>

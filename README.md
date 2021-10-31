@@ -110,9 +110,10 @@ gamecontroller.on("leftshoulder", (data) =>
   console.log(`player ${data.player} pressed:${data.pressed} leftshoulder`)
 );
 
-// Print information abour a pressed button
+// Print information about a pressed button
 gamecontroller.on("controller-button-down", (data) =>
   console.log("button pressed", data)
+);
 ```
 
 # API Docs
@@ -158,9 +159,9 @@ install git `dnf install -y git` or `apt install git`
 brew install sdl2
 ```
 
-## Lastest SDL fron source (OPTIONAL)
+## Lastest SDL from source (OPTIONAL)
 
-The version available from Hombrew is generally very recent so if you are dissatisfied with the version
+The version available from Homebrew is generally very recent so if you are dissatisfied with the version
 
 In this case, you can [install from source](https://wiki.libsdl.org/Installation) with the instructions on the SDL2 wiki.
 

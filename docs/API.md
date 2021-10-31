@@ -71,7 +71,7 @@ Emitted when game controller button pressed.
 }
 ```
 
-Two aliases for this event are also emmited with the event name set to the button and another event with the name set to name + ":down" name.
+Two aliases for this event are also emitted with the event name set to the button and another event with the name set to name + ":down" name.
 These names are defined in [SDL source code](https://github.com/libsdl-org/SDL/blob/release-2.0.16/src/joystick/SDL_gamecontroller.c)
 
 - a
@@ -117,7 +117,7 @@ Emitted when game controller button released.
 }
 ```
 
-Two aliases for this event are also emmited with the event name set to the button and another event with the name set to name + ":up" name.
+Two aliases for this event are also emitted with the event name set to the button and another event with the name set to name + ":up" name.
 See [controller-button-down](#controller-button-down)
 
 For example:
@@ -142,7 +142,7 @@ Emitted for game controller axis motion.
 }
 ```
 
-An alias for this event is also emmited with the event name set to the axis name.
+An alias for this event is also emitted with the event name set to the axis name.
 These names are defined in [SDL source code](https://github.com/libsdl-org/SDL/blob/release-2.0.16/src/joystick/SDL_gamecontroller.c)
 
 - leftx
@@ -225,7 +225,7 @@ Emitted when Game controller sensor is updated
 }
 ```
 
-An alias for this event is also emmited with the event name set to either `gyroscope` or `accelerometer`.
+An alias for this event is also emitted with the event name set to either `gyroscope` or `accelerometer`.
 
 For example:
 

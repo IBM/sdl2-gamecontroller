@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "ban.spellright",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools"
+    ]
+}

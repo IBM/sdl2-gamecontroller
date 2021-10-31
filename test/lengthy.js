@@ -97,7 +97,7 @@ gamecontroller.on("leftshoulder", (data) =>
   console.log(`player ${data.player} pressed:${data.pressed} leftshoulder`)
 );
 
-// Print information abour a pressed button
+// Print information about a pressed button
 gamecontroller.on("controller-button-down", (data) =>
   console.log("button pressed", data)
 );
