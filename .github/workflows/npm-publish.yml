@@ -44,7 +44,6 @@ jobs:
         with:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
-      - run: echo "//npm.pkg.github.com/:_authToken=${GPR_TOKEN}" > .npmrc
       - run: npm publish --registry=https://npm.pkg.github.com/
         env:
-          GPR_TOKEN: ${{secrets.GPR_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
