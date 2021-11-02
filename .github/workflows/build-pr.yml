@@ -36,3 +36,15 @@ jobs:
       - name: Compile
         run: npm ci
 
+   check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Install cpplint
+        run: |
+         python -m pip install --upgrade pip
+         pip install cpplint
+      - name: check format
+        run: cpplint src/*
+
