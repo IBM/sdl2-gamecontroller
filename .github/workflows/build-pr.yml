@@ -50,6 +50,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: check format
         run: clang-format -n src/*  |& tee errors
-      - run: |
-         [[ ! -s errors ]]"
+      - run: test ! -s errors
+
 
