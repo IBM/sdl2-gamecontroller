@@ -1,6 +1,6 @@
 # sdl2-gamecontroller
 
-Game controller support for nodejs `EventEmitter` backed by [SDL2](https://www.libsdl.org/).
+Game controller support for nodejs `EventEmitter` backed by [SDL2](https://www.libsdl.org/). test
 
 # Installation
 
