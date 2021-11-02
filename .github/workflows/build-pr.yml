@@ -9,7 +9,7 @@ name: Build PR
 on: [pull_request]
 
 jobs:
-   build:
+   build-ubuntu:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,4 +19,20 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt install -y build-essential cmake libsdl2-dev
       - run: npm ci
+
+   build-brew:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: sudo apt-get update
+      - run: sudo apt install -y build-essential cmake git
+      - name: Install brew package manager
+        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      - name: Install SDL2 with brew
+        run: brew install sdl2
+      - name: Compile
+        run: npm ci
 
