@@ -1,0 +1,22 @@
+---
+Language: Cpp
+AccessModifierOffset: -1
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakTemplateDeclarations: true
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeBraces: Attach
+CommentPragmas: ""
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ContinuationIndentWidth: 2
+IndentCaseLabels: true
+MaxEmptyLinesToKeep: 1
+PenaltyBreakBeforeFirstCallParameter: 3000
+ReflowComments: true
+SortIncludes: false
+SpaceAfterCStyleCast: true
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: 2
+TabWidth: 2
+UseTab: Never
