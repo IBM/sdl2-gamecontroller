@@ -115,12 +115,31 @@ SDL_GameController *SdlGameController::AddController(const int device_index,
   obj->Set("vendor_id", SDL_GameControllerGetVendor(controller));
   obj->Set("product_id", SDL_GameControllerGetProduct(controller));
 
+#if SDL_VERSION_ATLEAST(2, 0, 18)
+  auto trigger = SDL_GameControllerHasRumbleTriggers(controller) ? true : false;
+  obj->Set("has_rumble_trigger", trigger);
+#endif
+
 #if SDL_VERSION_ATLEAST(2, 0, 14)
   auto sn = SDL_GameControllerGetSerial(controller);
   if (sn)
     obj->Set("serial_number", sn);
   else
     obj->Set("serial_number", "none");
+
+  auto hasLeds = SDL_GameControllerHasLED(controller) ? true : false;
+  obj->Set("has_leds", hasLeds);
+
+  auto nTouchPads = SDL_GameControllerGetNumTouchpads(controller);
+  obj->Set("num_touchpads", nTouchPads);
+
+  auto accelerometer =
+    SDL_GameControllerHasSensor(controller, SDL_SENSOR_ACCEL) ? true : false;
+  obj->Set("has_accelerometer", accelerometer);
+
+  auto gyroscope =
+    SDL_GameControllerHasSensor(controller, SDL_SENSOR_GYRO) ? true : false;
+  obj->Set("has_gyroscope", gyroscope);
 #endif
 
 #if SDL_VERSION_ATLEAST(2, 0, 12)
@@ -136,33 +155,11 @@ SDL_GameController *SdlGameController::AddController(const int device_index,
   auto isHaptic = SDL_JoystickIsHaptic(js) ? true : false;
   obj->Set("haptic", isHaptic);
 
-#if SDL_VERSION_ATLEAST(2, 0, 14)
-  auto hasLeds = SDL_GameControllerHasLED(controller) ? "true" : "false";
-  obj->Set("has_leds", hasLeds);
-
-  auto nTouchPads = SDL_GameControllerGetNumTouchpads(controller);
-  obj->Set("num_touchpads", nTouchPads);
-
-  auto accelerometer =
-    SDL_GameControllerHasSensor(controller, SDL_SENSOR_ACCEL) ? true : false;
-  obj->Set("has_accelerometer", accelerometer);
-
-  auto gyroscope =
-    SDL_GameControllerHasSensor(controller, SDL_SENSOR_GYRO) ? true : false;
-  obj->Set("has_gyroscope", gyroscope);
-#endif
-
   SDL_ClearError();
   // Range seems to be 0x0200 - 0xFFFC
 #if SDL_VERSION_ATLEAST(2, 0, 10)
   auto rumble = SDL_GameControllerRumble(controller, 0x0200, 0x0200, 250) >= 0;
   obj->Set("has_rumble", rumble);
-#endif
-#if SDL_VERSION_ATLEAST(2, 0, 14)
-  SDL_ClearError();
-  auto trigger =
-    SDL_GameControllerRumbleTriggers(controller, 0, 0xFFFC, 1000) > 0;
-  obj->Set("has_rumble_trigger", trigger);
 #endif
 
   return controller;
