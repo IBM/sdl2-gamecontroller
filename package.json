@@ -1,6 +1,6 @@
 {
   "name": "sdl2-gamecontroller",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "install": "cmake-js compile"
   },

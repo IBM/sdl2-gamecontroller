@@ -147,7 +147,7 @@ sudo apt install -y build-essential cmake libsdl2-dev
 
 ```sh
 xcode-select --install
-brew install sdl2
+brew install cmake sdl2
 ```
 
 ## Linux - Latest SDL on Linux from Homebrew
@@ -161,9 +161,7 @@ brew install sdl2
 
 ## Lastest SDL from source (OPTIONAL)
 
-The version available from Homebrew is generally very recent so if you are dissatisfied with the version
-
-In this case, you can [install from source](https://wiki.libsdl.org/Installation) with the instructions on the SDL2 wiki.
+The version available from Homebrew is generally very recent but if you are dissatisfied with the version, you can [install from source](https://wiki.libsdl.org/Installation) with the instructions on the SDL2 wiki.
 
 ## Windows
 
