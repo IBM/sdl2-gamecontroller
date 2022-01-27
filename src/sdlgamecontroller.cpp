@@ -293,7 +293,7 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
           auto msg = obj.Get("message");
           // do not emit the message if the controller was previously found
           if (msg.IsString()) {
-            obj.Set("operation", "SDL_PollEvent2");
+            obj.Set("operation", "SDL_PollEvent");
             emit({Napi::String::New(env, "controller-device-added"), obj});
           }
         } else {
