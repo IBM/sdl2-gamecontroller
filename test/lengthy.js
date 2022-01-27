@@ -2,7 +2,7 @@ const gamecontroller = require("../index");
 
 gamecontroller.on("error", (data) => console.log("error", data));
 gamecontroller.on("warning", (data) => console.log("warning", data));
-gamecontroller.on("sdl-init", () => console.log("SDL2 Initialized"));
+gamecontroller.on("sdl-init", (data) => console.log("SDL2 Initialized", data));
 
 // controller connected
 gamecontroller.on("controller-device-added", (data) =>

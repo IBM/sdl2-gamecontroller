@@ -33,7 +33,7 @@ Napi::Object SdlGameController::Init(Napi::Env env, Napi::Object exports) {
 }
 
 SdlGameController::SdlGameController(const Napi::CallbackInfo &info)
-    : Napi::ObjectWrap<SdlGameController>(info) {
+    : Napi::ObjectWrap<SdlGameController>(info), poll_number(0) {
   // NOOP
 }
 
@@ -195,6 +195,7 @@ int SdlGameController::NextPlayer() {
 Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
   // do not spend too long here
   auto start = std::chrono::system_clock::now();
+  this->poll_number++;
 
   Napi::Env env = info.Env();
   Napi::Function emit_unbound =
@@ -223,7 +224,22 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
       emit({Napi::String::New(env, "error"),
             Napi::String::New(env, SDL_GetError())});
     } else {
-      emit({Napi::String::New(env, "sdl-init")});
+      SDL_version compiled;
+      SDL_version linked;
+
+      SDL_VERSION(&compiled);
+      SDL_GetVersion(&linked);
+
+      auto info = Napi::Object::New(env);
+      std::string compile_info = std::to_string(compiled.major) + "."
+                                 + std::to_string(compiled.minor) + "."
+                                 + std::to_string(compiled.patch);
+      info.Set("compiled_against_SDL_version", compile_info);
+      std::string link_info = std::to_string(linked.major) + "."
+                              + std::to_string(linked.minor) + "."
+                              + std::to_string(linked.patch);
+      info.Set("linkeded_against_SDL_version", link_info);
+      emit({Napi::String::New(env, "sdl-init"), info});
       SdlGameController::sdlInit = true;
 
       for (auto i = 0; i < SDL_NumJoysticks(); ++i) {
@@ -258,9 +274,10 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
     auto msSofar =
       std::chrono::duration_cast<std::chrono::milliseconds>(now - start)
         .count();
-    if (msSofar > 100) {
+    if (poll_number > 1 && msSofar > 100) {
       obj.Set("message", "Polling is taking too long.");
       obj.Set("elapsed_ms", msSofar);
+      obj.Set("poll_number", poll_number);
       emit({Napi::String::New(env, "warning"), obj});
       break;
     }
@@ -270,11 +287,14 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
 
     switch (event.type) {
       case SDL_CONTROLLERDEVICEADDED:
-
         gc = AddController(event.cdevice.which, &obj);
         if (gc) {
-          obj.Set("operation", "SDL_PollEvent");
-          emit({Napi::String::New(env, "controller-device-added"), obj});
+          auto msg = obj.Get("message");
+          // do not emit the message if the controller was previously found
+          if (msg.IsString()) {
+            obj.Set("operation", "SDL_PollEvent");
+            emit({Napi::String::New(env, "controller-device-added"), obj});
+          }
         } else {
           obj.Set("message", SDL_GetError());
           obj.Set("operation", "SDL_GameControllerOpen");
