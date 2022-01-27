@@ -123,7 +123,7 @@ Full docs for the events and the functions calls
 
 # Prerequisites
 
-NOTE: If you need rumble, LED, touchpad, gyroscope, or accelerometer support, you need SDL 2.0.16+ which seems not to be avalailable form the Ubunutu/Red Hat repos.
+NOTE: If you need rumble, LED, touchpad, gyroscope, or accelerometer support, you need SDL 2.0.16+ which seems not to be available form the Ubuntu/Red Hat repos.
 
 ## Linux **Red Hat**
 
