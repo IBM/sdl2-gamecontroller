@@ -47,15 +47,22 @@ Emitted if the event loop runs more than 100 ms. The event loop exits when this 
 
 ```js
 {
-  player: 2,
   message: 'Polling is taking too long.',
-  elapsed_ms: 125
+  elapsed_ms: 125,
+  poll_number: 13
 }
 ```
 
 ## sdl-init
 
-The call to [SDL_Init](https://wiki.libsdl.org/SDL_Init) was successful. No data is provided for this event.
+The call to [SDL_Init](https://wiki.libsdl.org/SDL_Init) was successful.
+
+```js
+{
+  compiled_against_SDL_version: '2.0.20',
+  linkeded_against_SDL_version: '2.0.20'
+}
+```
 
 ## controller-button-down
 

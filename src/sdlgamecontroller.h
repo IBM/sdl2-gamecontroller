@@ -30,7 +30,7 @@ class SdlGameController : public Napi::ObjectWrap<SdlGameController> {
   int NextPlayer();
 
   static bool sdlInit;
-  int poll_number;
+  unsigned poll_number;
 
   std::map<SDL_JoystickID, SDL_GameController *> gamecontrollers;
 };
