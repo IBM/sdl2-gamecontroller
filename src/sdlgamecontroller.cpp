@@ -207,7 +207,6 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
 
   // Set up SDL
   if (!SdlGameController::sdlInit) {
-
     SDL_SetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK, "0");
 #if SDL_VERSION_ATLEAST(2, 0, 16)
     SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS, "1");
