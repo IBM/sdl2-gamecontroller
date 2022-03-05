@@ -3,7 +3,7 @@ declare const gamecontroller: Gamecontroller;
 export default gamecontroller;
 
 export type Message = {message: string};
-export type Player = {player: number};
+export type Player = {player?: number};
 export type Error = Message & Player & {operation: string};
 export type Warning = Message & {
   operation: string;
@@ -30,21 +30,54 @@ export type DeviceAdded = Message &
     has_rumble?: boolean;
     has_rumble_trigger?: boolean;
   };
-export type Value = {value: number};
-export type TimeStamp = {timestamp: number};
-export type OnButtonPress = Message &
-  Player & {button: ButtonType; pressed: boolean};
-
-export type OnTriggerPress = Omit<OnButtonPress, 'pressed'> & {
-  value: number;
-  timestamp: number;
+export type SensorUpdate = Message & {
+  sensor: 'gyroscope' | 'accelerometer';
+  x: number;
+  y: number;
+  z: number;
 };
-export type StickType = 'leftx' | 'lefty' | 'rightx' | 'righty';
+export type SensorUpdateEvents =
+  | 'controller-sensor-update'
+  | 'gyroscope'
+  | 'accelerometer';
+export type SensorStateEvents =
+  | 'accelerometer:enabled'
+  | 'accelerometer:disabled'
+  | 'gyroscope:enabled'
+  | 'gyroscope:disabled';
 
-export type OnStickMoveData = Message &
-  Player &
-  Value &
-  TimeStamp & {button: StickType};
+export type TouchpadUpdate = Message & {
+  touchpad: number;
+  finger: number;
+  x: number;
+  y: number;
+  pressure: number;
+};
+export type TouchpadEvents =
+  | 'controller-touchpad-down'
+  | 'controller-touchpad-up'
+  | 'controller-touchpad-motion';
+
+export type DeviceUpdated = Message & {
+  which: number;
+};
+export type DeviceUpdateEvents =
+  | 'controller-device-removed'
+  | 'controller-device-remapped';
+
+export type AxisType =
+  | 'leftx'
+  | 'lefty'
+  | 'rightx'
+  | 'righty'
+  | 'lefttrigger'
+  | 'righttrigger';
+
+export type AxisMotionData = Message &
+  Player & {button: AxisType; value: number; timestamp: number};
+
+export type ButtonPress = Message &
+  Player & {button: ButtonType; pressed: boolean};
 
 export type ButtonType =
   | 'a'
@@ -67,13 +100,13 @@ export type ButtonType =
 export type ButtonTypeWithUpsAndDowns =
   | `${ButtonType}:up`
   | `${ButtonType}:down`
-  | ButtonType;
+  | ButtonType
+  | 'controller-button-up'
+  | 'controller-button-down';
 
 export type ControllerButtonDown = Message &
   Player & {button: ButtonType; pressed: boolean};
 
-export type FieldUpdateHandler = (update: any) => unknown;
-export type Handlers = Record<string, FieldUpdateHandler>;
 export type CallBack<T = Record<string, unknown>> = (data: T) => void;
 
 type ON<TEventName, TCallBack> = (
@@ -81,30 +114,56 @@ type ON<TEventName, TCallBack> = (
   callBack: CallBack<TCallBack>,
 ) => void;
 
-type OnStickMove = ON<StickType, OnStickMoveData>;
-type OnButtonPressCall = ON<ButtonTypeWithUpsAndDowns, OnButtonPress>;
 type OnErrorCall = ON<'error', Error>;
 type OnWarningCall = ON<'warning', Warning>;
 type OnSdlInitCall = ON<'sdl-init', SdlInit>;
 type OnDeviceAddedCall = ON<'controller-device-added', DeviceAdded>;
-type OnControllerButtonUp = ON<'controller-button-up', OnButtonPress>;
-type OnControllerButtonDown = ON<'controller-button-down', OnButtonPress>;
-type OnTrigger = ON<'righttrigger' | 'lefttrigger', OnTriggerPress>;
+type OnDeviceUpdated = ON<DeviceUpdateEvents, DeviceUpdated>;
+type OnAxisUpdate = ON<AxisType, AxisMotionData>;
+type OnButtonPressCall = ON<ButtonTypeWithUpsAndDowns, ButtonPress>;
+type OnSensorUpdate = ON<SensorUpdateEvents, SensorUpdate>;
+type OnSensorStateChange = ON<SensorStateEvents, Player>;
+type OnTouchpadUpdate = ON<TouchpadEvents, TouchpadUpdate>;
+type OnLed = ON<'led', Player>;
+type OnRumbled = ON<'rumbled', Player>;
+type OnRumbledTriggers = ON<'rumbled-triggers', Player>;
 
 type AllOnOptions = OnButtonPressCall &
-  OnStickMove &
+  OnAxisUpdate &
   OnErrorCall &
   OnWarningCall &
   OnSdlInitCall &
   OnDeviceAddedCall &
+  OnDeviceUpdated &
   OnControllerButtonUp &
   OnControllerButtonDown &
-  OnTrigger;
+  OnSensorUpdate &
+  OnSensorStateChange &
+  OnTouchpadUpdate &
+  OnLed &
+  OnRumbled &
+  OnRumbledTriggers;
 
 type Gamecontroller = {
+  enableGyroscope: (enable?: boolean, player?: number) => void;
+  enableAccelerometer: (enable?: boolean, player?: number) => void;
+  setLeds: (
+    red?: number,
+    green?: number,
+    blue?: number,
+    player?: number,
+  ) => void;
+  rumble: (
+    low_frequency_rumble?: number,
+    high_frequency_rumble?: number,
+    duration_ms?: number,
+    player?: number,
+  ) => void;
   rumbleTriggers: (
-    buttonType: ButtonType,
-    callBack: CallBack<OnTriggerPress>,
+    left_rumble?: number,
+    right_rumble?: number,
+    duration_ms?: number,
+    player?: number,
   ) => void;
   on: AllOnOptions;
 };

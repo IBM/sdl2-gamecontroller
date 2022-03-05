@@ -29,6 +29,8 @@
 - [rumble(low_frequency_rumble, high_frequency_rumble, duration_ms, player)](#rumble)
 - [rumbleTriggers(left_rumble, right_rumble, duration_ms, player)](#rumbleTriggers)
 
+---
+
 ## error
 
 Emitted if something goes wrong. The `message` is set from [SDL_GetError](https://wiki.libsdl.org/SDL_GetError)
@@ -106,8 +108,8 @@ These names are defined in [SDL source code](https://github.com/libsdl-org/SDL/b
 For example:
 
 ```js
-gamecontroller.on("a:down", (data) => console.log("a pressed", data));
-gamecontroller.on("b", (data) => console.log("b up or down", data));
+gamecontroller.on('a:down', (data) => console.log('a pressed', data));
+gamecontroller.on('b', (data) => console.log('b up or down', data));
 ```
 
 ## controller-button-up
@@ -130,8 +132,8 @@ See [controller-button-down](#controller-button-down)
 For example:
 
 ```js
-gamecontroller.on("a:up", (data) => console.log("a pressed", data));
-gamecontroller.on("b", (data) => console.log("b up or down", data));
+gamecontroller.on('a:up', (data) => console.log('a pressed', data));
+gamecontroller.on('b', (data) => console.log('b up or down', data));
 ```
 
 ## controller-axis-motion
@@ -162,8 +164,8 @@ These names are defined in [SDL source code](https://github.com/libsdl-org/SDL/b
 For example:
 
 ```js
-gamecontroller.on("leftx", (data) =>
-  console.log("left stick moved in the x direction", data)
+gamecontroller.on('leftx', (data) =>
+  console.log('left stick moved in the x direction', data),
 );
 ```
 
@@ -183,7 +185,7 @@ Emitted when a new game controller has been inserted into the system
   serial_number: 'none',        // SDL 2.0.14+
   effects_supported: false,
   haptic: false,
-  has_leds: 'false',            // SDL 2.0.14+
+  has_leds: false,              // SDL 2.0.14+
   num_touchpads: 0,             // SDL 2.0.14+
   has_accelerometer: false,     // SDL 2.0.14+
   has_gyroscope: false,         // SDL 2.0.14+
@@ -237,8 +239,8 @@ An alias for this event is also emitted with the event name set to either `gyros
 For example:
 
 ```js
-gamecontroller.on("gyroscope", (data) =>
-  console.log("gyroscope updated", data)
+gamecontroller.on('gyroscope', (data) =>
+  console.log('gyroscope updated', data),
 );
 ```
 
@@ -371,6 +373,10 @@ Emitted when the controller triggers are successfully rumbled.
 }
 ```
 
+## Functions
+
+---
+
 ## enableGyroscope
 
 `enableGyroscope(enable, player)`
@@ -382,13 +388,13 @@ Emitted when the controller triggers are successfully rumbled.
 
 ```js
 // Enable Gyroscope (if supported) when X button is pressed
-gamecontroller.on("x:down", (data) => {
+gamecontroller.on('x:down', (data) => {
   console.log(`player ${data.player} pressed X`);
   gamecontroller.enableGyroscope(true);
 });
 
 // Disable Gyroscope (if supported) when X button is released
-gamecontroller.on("x:up", (data) => {
+gamecontroller.on('x:up', (data) => {
   console.log(`player ${data.player} released X`);
   gamecontroller.enableGyroscope(false);
 });
@@ -405,13 +411,13 @@ gamecontroller.on("x:up", (data) => {
 
 ```js
 // Enable Accelerometer (if supported) when Y button is pressed
-gamecontroller.on("y:down", (data) => {
+gamecontroller.on('y:down', (data) => {
   console.log(`player ${data.player} pressed Y`);
   gamecontroller.enableAccelerometer(true, data.player);
 });
 
 // Disable Accelerometer (if supported) when Y button is released
-gamecontroller.on("y:up", (data) => {
+gamecontroller.on('y:up', (data) => {
   console.log(`player ${data.player} released Y`);
   gamecontroller.enableAccelerometer(false, data.player);
 });
@@ -431,7 +437,7 @@ gamecontroller.on("y:up", (data) => {
 Example:
 
 ```js
-gamecontroller.on("leftstick:down", (data) => {
+gamecontroller.on('leftstick:down', (data) => {
   gamecontroller.setLeds(0x0f, 0x62, 0xfe);
 });
 ```
@@ -451,7 +457,7 @@ Example:
 
 ```js
 // Rumble (if supported) when A button is pressed
-gamecontroller.on("a:down", (data) => {
+gamecontroller.on('a:down', (data) => {
   gamecontroller.rumble(60000, 40000, 100, data.player);
 });
 ```
@@ -471,7 +477,7 @@ Example:
 
 ```js
 // Rumble triggers (if supported) when B button is pressed
-gamecontroller.on("b:down", (data) => {
+gamecontroller.on('b:down', (data) => {
   gamecontroller.rumbleTriggers(40000, 40000, 100, data.player);
 });
 ```
