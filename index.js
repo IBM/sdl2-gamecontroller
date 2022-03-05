@@ -1,3 +1,5 @@
+///<reference path="index.d.ts" />
+
 const EventEmitter = require('events').EventEmitter;
 const SdlGameController =
   require('bindings')('sdl_gamecontroller').SdlGameController;
