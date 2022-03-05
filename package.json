@@ -2,7 +2,8 @@
   "name": "sdl2-gamecontroller",
   "version": "1.0.5",
   "scripts": {
-    "install": "cmake-js compile"
+    "install": "cmake-js compile",
+    "lint": "prettier --write *.js *.ts test/*js test/*.ts"
   },
   "dependencies": {
     "bindings": "^1.5.0",
@@ -23,5 +24,10 @@
     "dualshock"
   ],
   "author": "David Nixon",
-  "license": "apache-2.0"
+  "license": "apache-2.0",
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "prettier-config-ibm": "^1.0.1"
+  },
+  "prettier": "prettier-config-ibm"
 }
