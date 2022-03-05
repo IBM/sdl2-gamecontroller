@@ -1,7 +1,9 @@
-const EventEmitter = require("events").EventEmitter;
+///<reference path="index.d.ts" />
+
+const EventEmitter = require('events').EventEmitter;
 const SdlGameController =
-  require("bindings")("sdl_gamecontroller").SdlGameController;
-const inherits = require("util").inherits;
+  require('bindings')('sdl_gamecontroller').SdlGameController;
+const inherits = require('util').inherits;
 
 inherits(SdlGameController, EventEmitter);
 
