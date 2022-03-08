@@ -135,8 +135,6 @@ type AllOnOptions = OnButtonPressCall &
   OnSdlInitCall &
   OnDeviceAddedCall &
   OnDeviceUpdated &
-  OnControllerButtonUp &
-  OnControllerButtonDown &
   OnSensorUpdate &
   OnSensorStateChange &
   OnTouchpadUpdate &
