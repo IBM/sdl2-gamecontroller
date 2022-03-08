@@ -1,5 +1,6 @@
 #include "sdlgamecontroller.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_gamecontroller.h>
 #include <chrono>
 #include <set>
@@ -428,6 +429,36 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
         emit({Napi::String::New(env, "controller-sensor-update"), obj});
         break;
 #endif
+        // LIMITED support for keyboard events - probably only helpful for
+        // testing
+      case SDL_KEYDOWN:
+      case SDL_KEYUP:
+        if (event.key.keysym.scancode == SDL_SCANCODE_A
+            || event.key.keysym.scancode == SDL_SCANCODE_B
+            || event.key.keysym.scancode == SDL_SCANCODE_X
+            || event.key.keysym.scancode == SDL_SCANCODE_Y) {
+          if (event.key.state == SDL_PRESSED) {
+            obj.Set("message", "Game controller button pressed");
+            gcBtn =
+              SDL_GetKeyName(SDL_GetKeyFromScancode(event.key.keysym.scancode));
+            gcBtn[0] = std::tolower(gcBtn[0]);
+            obj.Set("button", gcBtn);
+            obj.Set("pressed", true);
+            emit({Napi::String::New(env, gcBtn + ":down"), obj});
+            emit({Napi::String::New(env, gcBtn), obj});
+            emit({Napi::String::New(env, "controller-button-down"), obj});
+          } else {
+            obj.Set("message", "Game controller button released");
+            gcBtn =
+              SDL_GetKeyName(SDL_GetKeyFromScancode(event.key.keysym.scancode));
+            gcBtn[0] = std::tolower(gcBtn[0]);
+            obj.Set("button", gcBtn);
+            obj.Set("pressed", false);
+            emit({Napi::String::New(env, gcBtn + ":up"), obj});
+            emit({Napi::String::New(env, gcBtn), obj});
+            emit({Napi::String::New(env, "controller-button-up"), obj});
+          }
+        }
     }
   }
 

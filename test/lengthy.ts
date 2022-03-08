@@ -1,4 +1,4 @@
-const gamecontroller = require('../index');
+import gamecontroller from '../index';
 
 gamecontroller.on('error', (data) => console.log('error', data));
 gamecontroller.on('warning', (data) => console.log('warning', data));
@@ -6,7 +6,7 @@ gamecontroller.on('sdl-init', (data) => console.log('SDL2 Initialized', data));
 
 // controller connected
 gamecontroller.on('controller-device-added', (data) =>
-  console.log('controller connected', data),
+  console.log('controller connected', data.name),
 );
 
 // Rumble (if supported) when A button is pressed
@@ -70,7 +70,11 @@ gamecontroller.on('leftstick:down', (data) => {
 
 // Sensor updated
 gamecontroller.on('controller-sensor-update', (data) =>
-  console.log('sensor update', data),
+  console.log(
+    `sensor update ${data.sensor} (${data.x.toFixed(2)}, ${data.y.toFixed(
+      2,
+    )}, ${data.z.toFixed(2)})`,
+  ),
 );
 
 gamecontroller.on('accelerometer:enabled', (data) =>
@@ -87,14 +91,18 @@ gamecontroller.on('controller-touchpad-up', (data) =>
 );
 
 gamecontroller.on('controller-touchpad-motion', (data) =>
-  console.log('controller-touchpad-motion', data),
+  console.log(
+    `controller-touchpad-motion ${data.x.toFixed(2)}, ${data.y.toFixed(2)}`,
+  ),
 );
 
 gamecontroller.on('led', (data) => console.log('LEDS set', data));
 
 // Respond to both up & down events
 gamecontroller.on('leftshoulder', (data) =>
-  console.log(`player ${data.player} pressed:${data.pressed} leftshoulder`),
+  console.log(
+    `player ${data.player || 0} pressed:${data.pressed} leftshoulder`,
+  ),
 );
 
 // Print information about a pressed button

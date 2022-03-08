@@ -1,4 +1,4 @@
-const gamecontroller = require('../index.js');
+import gamecontroller from '../index';
 
 gamecontroller.on('error', (data) => console.log('error', data));
 gamecontroller.on('warning', (data) => console.log('warning', data));
