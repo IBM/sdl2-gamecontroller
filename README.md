@@ -1,3 +1,5 @@
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5838/badge)](https://bestpractices.coreinfrastructure.org/projects/5838)
+
 # sdl2-gamecontroller
 
 Game controller support for nodejs `EventEmitter` backed by [SDL2](https://www.libsdl.org/).
