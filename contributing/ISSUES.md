@@ -26,6 +26,8 @@ When opening a new issue in the issue tracker, please provide as much detail abo
 
 See [How to create a Minimal, Complete, and Verifiable example](https://stackoverflow.com/help/mcve).
 
+If you find a security vulnerability please add the "vulnerability" lable to the issue and include a CVE report if available.
+
 ## Triaging a Bug Report
 
 Once an issue has been opened, it is not uncommon for there to be discussion
