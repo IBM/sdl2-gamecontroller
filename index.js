@@ -1,4 +1,4 @@
-///<reference path="index.d.ts" />
+// /<reference path="index.d.ts" />
 
 const EventEmitter = require('events').EventEmitter;
 const SdlGameController =
