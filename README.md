@@ -1,6 +1,13 @@
 # sdl2-gamecontroller
 
 Game controller support for nodejs `EventEmitter` backed by [SDL2](https://www.libsdl.org/).
+# Description
+
+Do you want to use a game controller with your node app? You should first ask yourself “why” and you should examine your life choices that have brought you to this point.
+
+If you do find you need to use a game controller with a node app, you are in the right place. I used SDL (Simple DirectMedia Layer) to power the controller because, in my experience, SDL just works. The most recent version has support for the DualSense, but it also has support for every other controller I have tried so far. The node addon is a thin wrapper around the SDL event loop and the SDL functions for rumble and lights.
+
+[Article on LinkedIn](https://www.linkedin.com/pulse/how-use-sdl-powered-game-controller-nodejs-david-nixon)
 
 # Installation
 
@@ -13,6 +20,9 @@ yarn add sdl2-gamecontroller
 ```sh
 npm install sdl2-gamecontroller
 ```
+# Feedback
+
+Found a bug or just what to let me know what you think. Open an issue on the [issues tab](https://github.com/IBM/sdl2-gamecontroller/issues) or [leave a comment](https://github.com/IBM/sdl2-gamecontroller/issues/9)
 
 # Using the library
 
