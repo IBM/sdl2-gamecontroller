@@ -46,7 +46,7 @@ gamecontroller.on('y:up', (data) => {
 });
 
 // Set LED colors (if supported) when leftstick button is pressed
-var count = 0;
+let count = 0;
 gamecontroller.on('leftstick:down', (data) => {
   console.log(`player ${data.player} pressed leftstick`);
   switch (count % 3) {
@@ -102,4 +102,4 @@ gamecontroller.on('controller-button-down', (data) =>
   console.log('button pressed', data),
 );
 
-gamecontroller.on('back', (data) => process.exit(0));
+gamecontroller.on('back', () => process.exit(0));

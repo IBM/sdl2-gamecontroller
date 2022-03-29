@@ -1,7 +1,3 @@
-declare const gamecontroller: Gamecontroller;
-
-export default gamecontroller;
-
 export type Message = {message: string};
 export type Player = {player?: number};
 export type Error = Message & Player & {operation: string};
@@ -73,12 +69,6 @@ export type AxisType =
   | 'lefttrigger'
   | 'righttrigger';
 
-export type AxisMotionData = Message &
-  Player & {button: AxisType; value: number; timestamp: number};
-
-export type ButtonPress = Message &
-  Player & {button: ButtonType; pressed: boolean};
-
 export type ButtonType =
   | 'a'
   | 'b'
@@ -96,6 +86,12 @@ export type ButtonType =
   | 'dpdown'
   | 'dpright'
   | 'dpleft';
+
+export type AxisMotionData = Message &
+  Player & {button: AxisType; value: number; timestamp: number};
+
+export type ButtonPress = Message &
+  Player & {button: ButtonType; pressed: boolean};
 
 export type ButtonTypeWithUpsAndDowns =
   | `${ButtonType}:up`
@@ -165,3 +161,6 @@ type Gamecontroller = {
   ) => void;
   on: AllOnOptions;
 };
+
+declare const gamecontroller: Gamecontroller;
+export default gamecontroller;
