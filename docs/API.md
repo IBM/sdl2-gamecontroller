@@ -132,7 +132,7 @@ See [controller-button-down](#controller-button-down)
 For example:
 
 ```js
-gamecontroller.on('a:up', (data) => console.log('a pressed', data));
+gamecontroller.on('a:up', (data) => console.log('a released', data));
 gamecontroller.on('b', (data) => console.log('b up or down', data));
 ```
 
