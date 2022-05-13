@@ -1,6 +1,6 @@
 {
   "name": "sdl2-gamecontroller",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "scripts": {
     "install": "cmake-js compile",
     "lint": "prettier --write *.js *.ts test/*js test/*.ts",
@@ -27,6 +27,7 @@
   "author": "David Nixon",
   "license": "apache-2.0",
   "devDependencies": {
+    "@types/node": "^8.10.66",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "eslint": "^8.12.0",

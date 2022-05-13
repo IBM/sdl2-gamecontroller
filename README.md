@@ -39,6 +39,21 @@ gamecontroller.on("sdl-init", () => console.log("SDL2 Initialized"));
 gamecontroller.on("a:down", (data) => console.log("Hello A button world"));
 ```
 
+## Hello world with custom options
+
+```js
+const gamecontroller = require('sdl2-gamecontroller/custom')({sdl_joystick_rog_chakram: true, fps: 25})
+
+gamecontroller.on('error', (data) => console.log('error', data));
+gamecontroller.on('warning', (data) => console.log('warning', data));
+gamecontroller.on('sdl-init', (data) => console.log('SDL2 Initialized', data));
+gamecontroller.on('a:down', () => console.log('Hello A button world'));
+gamecontroller.on('controller-device-added', (data) =>
+  console.log('controller connected', data.name),
+);
+gamecontroller.on('x:down', () => process.exit(0));
+```
+
 ## Lengthy example
 
 ```js

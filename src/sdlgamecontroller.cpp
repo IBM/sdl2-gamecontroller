@@ -35,7 +35,13 @@ Napi::Object SdlGameController::Init(Napi::Env env, Napi::Object exports) {
 
 SdlGameController::SdlGameController(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<SdlGameController>(info), poll_number(0) {
-  // NOOP
+  if (info.Length() > 0) {
+    Napi::Object config = info[0].As<Napi::Object>();
+    Napi::Value value = config.Get("sdl_joystick_rog_chakram");
+    auto sdl_joystick_rog_chakram = value.ToBoolean();
+    if (sdl_joystick_rog_chakram)
+      this->hints.insert("sdl_joystick_rog_chakram");
+  }
 }
 
 /* PS5 trigger effect documentation:
@@ -182,7 +188,7 @@ int SdlGameController::NextPlayer() {
     players.insert(player);
   }
 
-  // Find the first avilable player slot. Max number of players is 8 probably.
+  // Find the first available player slot. Max number of players is 8 probably.
   for (int player = 1; player < 8; player++) {
     auto search = players.find(player);
     if (search == players.end()) {
@@ -219,6 +225,11 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
     SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE, "1");
 #endif
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
+#if SDL_VERSION_ATLEAST(2, 0, 22)
+    if (this->hints.count("sdl_joystick_rog_chakram") > 0) {
+      SDL_SetHint(SDL_HINT_JOYSTICK_ROG_CHAKRAM, "1");
+    }
+#endif
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER)
         < 0) {
@@ -239,7 +250,12 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
       std::string link_info = std::to_string(linked.major) + "."
                               + std::to_string(linked.minor) + "."
                               + std::to_string(linked.patch);
-      info.Set("linkeded_against_SDL_version", link_info);
+      info.Set("linked_against_SDL_version", link_info);
+#if SDL_VERSION_ATLEAST(2, 0, 22)
+      if (this->hints.count("sdl_joystick_rog_chakram") > 0) {
+        info.Set("using_hints", "sdl_joystick_rog_chakram");
+      }
+#endif
       emit({Napi::String::New(env, "sdl-init"), info});
       SdlGameController::sdlInit = true;
 

@@ -3,6 +3,8 @@
 #include <SDL2/SDL_gamecontroller.h>
 #include <map>
 #include <napi.h>  // NOLINT
+#include <set>
+#include <string>
 #include <thread>
 
 constexpr size_t ARRAY_LENGTH = 10;
@@ -33,4 +35,5 @@ class SdlGameController : public Napi::ObjectWrap<SdlGameController> {
   unsigned poll_number;
 
   std::map<SDL_JoystickID, SDL_GameController *> gamecontrollers;
+  std::set<std::string> hints;
 };
