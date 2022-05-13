@@ -6,9 +6,11 @@ const gamecontroller = require('sdl2-gamecontroller/custom')(options)
 
 ## options
 
-- interval - Number: set polling interval in milliseconds `{interval: 40}`
-- fps: Number - set polling interval in frames per second `{fps: 25}`
-- sdl_joystick_rog_chakram - Boolean: Turn on/off support for the ROG Chakram mouse. (Requires SDL 2.0.22)
+- interval - Number: set polling interval in milliseconds (*default is 33ms*). `{interval: 40}` 
+- fps: Number - set polling interval in frames per second (*default to interval value*). `{fps: 25}`
+- sdl_joystick_rog_chakram - Boolean: Turn on/off support for the ROG Chakram mouse (*default false*). Requires SDL 2.0.22. `{sdl_joystick_rog_chakram: true}`
+
+**NOTE:** If you specify both `interval` and `fps`, `fps` will be used.
 
 # Events
 

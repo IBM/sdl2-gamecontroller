@@ -5,13 +5,17 @@ message(STATUS "Build type ${CMAKE_BUILD_TYPE}")
 
 # Add SDL2
 find_package(SDL2 REQUIRED)
-get_filename_component(SDL2_PARENT_DIR ${SDL2_INCLUDE_DIRS} DIRECTORY)
-message(STATUS "Found SDL2 includes in ${SDL2_INCLUDE_DIRS} in ${SDL2_PARENT_DIR}")
-include_directories(SYSTEM "${SDL2_PARENT_DIR}") 
+if(IS_DIRECTORY "${SDL2_INCLUDE_DIRS}")
+ get_filename_component(SDL2_PARENT_DIR ${SDL2_INCLUDE_DIRS} DIRECTORY)
+ message(STATUS "Found SDL2 includes in ${SDL2_INCLUDE_DIRS} in ${SDL2_PARENT_DIR}")
+ include_directories(SYSTEM "${SDL2_PARENT_DIR}")
+else()
+ message(STATUS "SDL2 includes is probably multiple directories ${SDL2_INCLUDE_DIRS}")
+endif()
 
 # Add Node
 include_directories(SYSTEM ${CMAKE_JS_INC})
-message(STATUS "Found Node in ${CMAKE_JS_INC}") 
+message(STATUS "Found Node in ${CMAKE_JS_INC}")
 
 # Include node-addon-api wrappers
 execute_process(COMMAND node -p "require('node-addon-api').include"

@@ -10,7 +10,7 @@ Please note we have a [Code of Conduct](#code-of-conduct), please follow it in a
 2. Commit your changes to your fork.
 3. Submit a pull request.
 4. Handle any feedback before the request is merged.
-5. Accept our sincere Thank You!
+5. Accept our sincere “Thank You”!
 
 ## Code of Conduct
 

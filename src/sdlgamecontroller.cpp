@@ -188,7 +188,7 @@ int SdlGameController::NextPlayer() {
     players.insert(player);
   }
 
-  // Find the first avilable player slot. Max number of players is 8 probably.
+  // Find the first available player slot. Max number of players is 8 probably.
   for (int player = 1; player < 8; player++) {
     auto search = players.find(player);
     if (search == players.end()) {
@@ -250,7 +250,7 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
       std::string link_info = std::to_string(linked.major) + "."
                               + std::to_string(linked.minor) + "."
                               + std::to_string(linked.patch);
-      info.Set("linkeded_against_SDL_version", link_info);
+      info.Set("linked_against_SDL_version", link_info);
 #if SDL_VERSION_ATLEAST(2, 0, 22)
       if (this->hints.count("sdl_joystick_rog_chakram") > 0) {
         info.Set("using_hints", "sdl_joystick_rog_chakram");

@@ -1,5 +1,6 @@
-// const gamecontroller = require('../index')
-const gamecontroller = require('../custom')({
+import customController from '../custom';
+
+const gamecontroller = customController({
   sdl_joystick_rog_chakram: true,
   interval: 90,
 });

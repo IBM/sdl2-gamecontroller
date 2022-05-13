@@ -8,7 +8,7 @@ export type Warning = Message & {
 };
 export type SdlInit = {
   compiled_against_SDL_version: string;
-  linkeded_against_SDL_version: string;
+  linked_against_SDL_version: string;
 };
 export type DeviceAdded = Message &
   Player & {
@@ -138,7 +138,7 @@ type AllOnOptions = OnButtonPressCall &
   OnRumbled &
   OnRumbledTriggers;
 
-type Gamecontroller = {
+export type Gamecontroller = {
   enableGyroscope: (enable?: boolean, player?: number) => void;
   enableAccelerometer: (enable?: boolean, player?: number) => void;
   setLeds: (
@@ -159,6 +159,7 @@ type Gamecontroller = {
     duration_ms?: number,
     player?: number,
   ) => void;
+  pollEvents: () => void; // internal
   on: AllOnOptions;
 };
 
