@@ -186,10 +186,15 @@ install git `dnf install -y git` or `apt install git`
 brew install sdl2
 ```
 
-## Lastest SDL from source (OPTIONAL)
+## Latest SDL from source (OPTIONAL)
 
 The version available from Homebrew is generally very recent but if you are dissatisfied with the version, you can [install from source](https://wiki.libsdl.org/Installation) with the instructions on the SDL2 wiki.
 
 ## Windows
 
+- [install nvm](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
+- `nvm install 16`
+- [Install visual studio with cmake and C++](https://visualstudio.microsoft.com/downloads/)
+- [Install SDL2 dev for libraries for VC](https://www.libsdl.org/download-2.0.php)
+- [install cmake](https://cmake.org/download/)
 I do not know if this works on Windows. If you get this working, please open a PR for changes to this doc and the code.
