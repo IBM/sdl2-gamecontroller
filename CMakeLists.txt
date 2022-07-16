@@ -43,7 +43,10 @@ set (CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
 #
 # Compiler flags
 #
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+if (MSVC)
+else()
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
+endif()
 
 #
 # Project Search Paths
