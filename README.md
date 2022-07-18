@@ -196,5 +196,20 @@ The version available from Homebrew is generally very recent but if you are diss
 - `nvm install 16`
 - [Install visual studio with cmake and C++](https://visualstudio.microsoft.com/downloads/)
 - [Install SDL2 dev for libraries for VC](https://www.libsdl.org/download-2.0.php)
-- [install cmake](https://cmake.org/download/)
-I do not know if this works on Windows. If you get this working, please open a PR for changes to this doc and the code.
+- Unzip to your home directory under "lib"
+  ```powershell
+  cd ~/lib
+  # allow the code to reference this path as "sdl2"
+  New-Item -ItemType Junction -Path .\sdl2 -Target .\SDL2-devel-2.0.22-VC\SDL2-2.0.22\
+  cd sdl2
+  # allow the code to reference the SDL.h as "#include <SDL2/SDL.h>"
+  New-Item -ItemType Junction -Path SDL2 -Target .\include\
+  ```
+  Example
+  ```
+  C:\Users\David\lib\sdl2\include
+  C:\Users\David\lib\sdl2\lib
+  C:\Users\David\lib\sdl2\SDL2
+  ```
+  
+~~I do not know if this works on Windows. If you get this working, please open a PR for changes to this doc and the code.~~
