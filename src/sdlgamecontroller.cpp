@@ -495,22 +495,16 @@ void SdlGameController::enableGyroscope(const Napi::CallbackInfo &info) {
 
   // Check if enable is set.
   if (info.Length() > 0) {
-    // Check the argument types
-    if (!info[0].IsBoolean()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsBoolean()) {
+        enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
     }
-    enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
   }
 
   // Check if player number is set
   if (info.Length() > 1) {
-    // Check the argument types
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+        playerNumber = info[1].ToNumber();
     }
-    playerNumber = info[1].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -558,21 +552,15 @@ void SdlGameController::enableAccelerometer(const Napi::CallbackInfo &info) {
 
   // Check the number of arguments passed.
   if (info.Length() > 0) {
-    // Check the argument types
-    if (!info[0].IsBoolean()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsBoolean()) {
+        enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
     }
-    enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
   }
 
   if (info.Length() > 1) {
-    // Check the argument types
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      playerNumber = info[1].ToNumber();
     }
-    playerNumber = info[1].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -623,42 +611,30 @@ void SdlGameController::rumble(const Napi::CallbackInfo &info) {
 
   // Check for low frequency
   if (info.Length() > 0) {
-    // Check the argument type
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+      low_frequency_rumble = static_cast<uint32_t>(info[0].ToNumber());
     }
-    low_frequency_rumble = static_cast<uint32_t>(info[0].ToNumber());
   }
 
   // Check for high frequency
   if (info.Length() > 1) {
-    // Check the argument type
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      high_frequency_rumble = static_cast<uint32_t>(info[1].ToNumber());
     }
-    high_frequency_rumble = static_cast<uint32_t>(info[1].ToNumber());
   }
 
   // Check for high frequency
   if (info.Length() > 2) {
-    // Check the argument type
-    if (!info[2].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[2].IsNumber()) {
+      duration_ms = static_cast<uint32_t>(info[2].ToNumber());
     }
-    duration_ms = static_cast<uint32_t>(info[2].ToNumber());
   }
 
   // Check for player number
   if (info.Length() > 3) {
-    // Check the argument types
-    if (!info[3].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[3].IsNumber()) {
+      playerNumber = info[3].ToNumber();
     }
-    playerNumber = info[3].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -708,42 +684,31 @@ void SdlGameController::rumbleTriggers(const Napi::CallbackInfo &info) {
 
   // Check for left
   if (info.Length() > 0) {
-    // Check the argument type
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+      left_rumble = static_cast<uint32_t>(info[0].ToNumber());
     }
-    left_rumble = static_cast<uint32_t>(info[0].ToNumber());
   }
 
   // Check for right
   if (info.Length() > 1) {
-    // Check the argument type
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      right_rumble = static_cast<uint32_t>(info[1].ToNumber());
     }
-    right_rumble = static_cast<uint32_t>(info[1].ToNumber());
   }
 
   // Check for duration
   if (info.Length() > 2) {
-    // Check the argument type
-    if (!info[2].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[2].IsNumber()) {
+      duration_ms = static_cast<uint32_t>(info[2].ToNumber());
     }
-    duration_ms = static_cast<uint32_t>(info[2].ToNumber());
   }
 
   // Check for player number
   if (info.Length() > 3) {
     // Check the argument types
-    if (!info[3].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[3].IsNumber()) {
+      playerNumber = info[3].ToNumber();
     }
-    playerNumber = info[3].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -793,42 +758,30 @@ void SdlGameController::setLeds(const Napi::CallbackInfo &info) {
 
   // Check for red
   if (info.Length() > 0) {
-    // Check the argument type
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+      red = static_cast<uint32_t>(info[0].ToNumber());
     }
-    red = static_cast<uint32_t>(info[0].ToNumber());
   }
 
   // Check for green
   if (info.Length() > 1) {
-    // Check the argument type
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      green = static_cast<uint32_t>(info[1].ToNumber());
     }
-    green = static_cast<uint32_t>(info[1].ToNumber());
   }
 
   // Check for blue
   if (info.Length() > 2) {
-    // Check the argument type
-    if (!info[2].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[2].IsNumber()) {
+      blue = static_cast<uint32_t>(info[2].ToNumber());
     }
-    blue = static_cast<uint32_t>(info[2].ToNumber());
   }
 
   // Check for player number
   if (info.Length() > 3) {
-    // Check the argument types
-    if (!info[3].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[3].IsNumber()) {
+      playerNumber = info[3].ToNumber();
     }
-    playerNumber = info[3].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
