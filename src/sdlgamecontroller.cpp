@@ -492,25 +492,26 @@ void SdlGameController::enableGyroscope(const Napi::CallbackInfo &info) {
 
   SDL_bool enable = SDL_TRUE;
   int playerNumber = 0;  // enable for all players
+  auto warning = Napi::Object::New(env);
 
   // Check if enable is set.
   if (info.Length() > 0) {
-    // Check the argument types
-    if (!info[0].IsBoolean()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsBoolean()) {
+      enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
+    } else {
+      warning.Set("message", "wrong argument type: enable");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
   }
 
   // Check if player number is set
   if (info.Length() > 1) {
-    // Check the argument types
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+      playerNumber = info[1].ToNumber();
+    } else {
+      warning.Set("message", "wrong argument type: player");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    playerNumber = info[1].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -555,24 +556,25 @@ void SdlGameController::enableAccelerometer(const Napi::CallbackInfo &info) {
 
   int playerNumber = 0;  // enable for all players
   SDL_bool enable = SDL_TRUE;
+  auto warning = Napi::Object::New(env);
 
   // Check the number of arguments passed.
   if (info.Length() > 0) {
-    // Check the argument types
-    if (!info[0].IsBoolean()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsBoolean()) {
+      enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
+    } else {
+      warning.Set("message", "wrong argument type: enable");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    enable = info[0].ToBoolean() ? SDL_TRUE : SDL_FALSE;
   }
 
   if (info.Length() > 1) {
-    // Check the argument types
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      playerNumber = info[1].ToNumber();
+    } else {
+      warning.Set("message", "wrong argument type: player");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    playerNumber = info[1].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -620,45 +622,46 @@ void SdlGameController::rumble(const Napi::CallbackInfo &info) {
   Uint16 low_frequency_rumble = 0xFFFC;
   Uint16 high_frequency_rumble = 0xFFFC;
   Uint32 duration_ms = 250;
+  auto warning = Napi::Object::New(env);
 
   // Check for low frequency
   if (info.Length() > 0) {
-    // Check the argument type
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+      low_frequency_rumble = static_cast<uint32_t>(info[0].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: low_frequency_rumble");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    low_frequency_rumble = static_cast<uint32_t>(info[0].ToNumber());
   }
 
   // Check for high frequency
   if (info.Length() > 1) {
-    // Check the argument type
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      high_frequency_rumble = static_cast<uint32_t>(info[1].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: high_frequency_rumble");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    high_frequency_rumble = static_cast<uint32_t>(info[1].ToNumber());
   }
 
   // Check for high frequency
   if (info.Length() > 2) {
-    // Check the argument type
-    if (!info[2].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[2].IsNumber()) {
+      duration_ms = static_cast<uint32_t>(info[2].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: duration_ms");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    duration_ms = static_cast<uint32_t>(info[2].ToNumber());
   }
 
   // Check for player number
   if (info.Length() > 3) {
-    // Check the argument types
-    if (!info[3].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[3].IsNumber()) {
+      playerNumber = info[3].ToNumber();
+    } else {
+      warning.Set("message", "wrong argument type: player");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    playerNumber = info[3].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -705,45 +708,47 @@ void SdlGameController::rumbleTriggers(const Napi::CallbackInfo &info) {
   Uint16 left_rumble = 0xFFFC;
   Uint16 right_rumble = 0xFFFC;
   Uint32 duration_ms = 250;
+  auto warning = Napi::Object::New(env);
 
   // Check for left
   if (info.Length() > 0) {
-    // Check the argument type
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+      left_rumble = static_cast<uint32_t>(info[0].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: left_rumble");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    left_rumble = static_cast<uint32_t>(info[0].ToNumber());
   }
 
   // Check for right
   if (info.Length() > 1) {
-    // Check the argument type
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      right_rumble = static_cast<uint32_t>(info[1].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: right_rumble");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    right_rumble = static_cast<uint32_t>(info[1].ToNumber());
   }
 
   // Check for duration
   if (info.Length() > 2) {
-    // Check the argument type
-    if (!info[2].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[2].IsNumber()) {
+      duration_ms = static_cast<uint32_t>(info[2].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: duration_ms");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    duration_ms = static_cast<uint32_t>(info[2].ToNumber());
   }
 
   // Check for player number
   if (info.Length() > 3) {
     // Check the argument types
-    if (!info[3].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[3].IsNumber()) {
+      playerNumber = info[3].ToNumber();
+    } else {
+      warning.Set("message", "wrong argument type: player");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    playerNumber = info[3].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
@@ -790,45 +795,46 @@ void SdlGameController::setLeds(const Napi::CallbackInfo &info) {
   Uint8 red = 0x00;
   Uint8 green = 0x00;
   Uint8 blue = 0xff;
+  auto warning = Napi::Object::New(env);
 
   // Check for red
   if (info.Length() > 0) {
-    // Check the argument type
-    if (!info[0].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[0].IsNumber()) {
+      red = static_cast<uint32_t>(info[0].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: red");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    red = static_cast<uint32_t>(info[0].ToNumber());
   }
 
   // Check for green
   if (info.Length() > 1) {
-    // Check the argument type
-    if (!info[1].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[1].IsNumber()) {
+      green = static_cast<uint32_t>(info[1].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: green");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    green = static_cast<uint32_t>(info[1].ToNumber());
   }
 
   // Check for blue
   if (info.Length() > 2) {
-    // Check the argument type
-    if (!info[2].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[2].IsNumber()) {
+      blue = static_cast<uint32_t>(info[2].ToNumber());
+    } else {
+      warning.Set("message", "wrong argument type: blue");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    blue = static_cast<uint32_t>(info[2].ToNumber());
   }
 
   // Check for player number
   if (info.Length() > 3) {
-    // Check the argument types
-    if (!info[3].IsNumber()) {
-      throw Napi::Error::New(env, "Wrong arguments");
-      return;
+    if (info[3].IsNumber()) {
+      playerNumber = info[3].ToNumber();
+    } else {
+      warning.Set("message", "wrong argument type: player");
+      emit({Napi::String::New(env, "warning"), warning});
     }
-    playerNumber = info[3].ToNumber();
   }
 
   for (auto &controller : gamecontrollers) {
