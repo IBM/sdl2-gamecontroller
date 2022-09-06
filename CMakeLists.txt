@@ -11,6 +11,7 @@ if(IS_DIRECTORY "${SDL2_INCLUDE_DIRS}")
  include_directories(SYSTEM "${SDL2_PARENT_DIR}")
 else()
  message(STATUS "SDL2 includes is probably multiple directories ${SDL2_INCLUDE_DIRS}")
+ include_directories(SYSTEM "${SDL2_INCLUDE_DIRS}")
 endif()
 
 # Add Node
