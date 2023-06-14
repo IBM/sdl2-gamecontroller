@@ -4,7 +4,9 @@ project(sdl_gamecontroller CXX)
 message(STATUS "Build type ${CMAKE_BUILD_TYPE}")
 
 # Add SDL2
-find_package(SDL2 REQUIRED)
+find_package(SDL2 REQUIRED
+    HINTS /home/linuxbrew/.linuxbrew/lib/cmake
+    )
 if(IS_DIRECTORY "${SDL2_INCLUDE_DIRS}")
  get_filename_component(SDL2_PARENT_DIR ${SDL2_INCLUDE_DIRS} DIRECTORY)
  message(STATUS "Found SDL2 includes in ${SDL2_INCLUDE_DIRS} in ${SDL2_PARENT_DIR}")
