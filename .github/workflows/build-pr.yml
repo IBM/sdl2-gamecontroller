@@ -28,7 +28,7 @@ jobs:
       - run: sudo apt install -y build-essential cmake git
       - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - name: Install SDL2 with brew
-        run: brew install sdl2
+        run: /home/linuxbrew/.linuxbrew/bin/brew install sdl2
       - name: Compile
         run: npm ci
 
