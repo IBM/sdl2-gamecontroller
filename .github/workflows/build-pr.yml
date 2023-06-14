@@ -26,6 +26,7 @@ jobs:
           node-version: 14
       - run: sudo apt-get update
       - run: sudo apt install -y build-essential cmake git
+      - run: sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - name: Install SDL2 with brew
         run: brew install sdl2
       - name: Compile
