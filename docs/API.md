@@ -267,7 +267,7 @@ Emitted when Game controller battery is updated
 // SDL 2.0.24+
 {
   message: 'Game controller battery was updated',
-  timestamp: 0, 
+  timestamp: "tbd",
   which: 0,
   level: "low"
 }
