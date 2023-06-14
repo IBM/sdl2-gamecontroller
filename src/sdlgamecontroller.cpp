@@ -242,7 +242,6 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
     SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED, "1");
 #endif
 
-
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER)
         < 0) {
       emit({Napi::String::New(env, "error"),
@@ -463,26 +462,26 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
         obj.Set("timestamp", event.jbattery.timestamp);
         obj.Set("which", static_cast<int>(event.jbattery.which));
         switch (event.jbattery.level) {
-            case SDL_JOYSTICK_POWER_EMPTY:
-                obj.Set("level", "empty");
-                break;
-            case SDL_JOYSTICK_POWER_LOW:
-                obj.Set("level", "low");
-                break;
-            case SDL_JOYSTICK_POWER_MEDIUM:
-                obj.Set("level", "medium");
-                break;
-            case SDL_JOYSTICK_POWER_FULL:
-                obj.Set("level", "full");
-                break;
-            case SDL_JOYSTICK_POWER_WIRED:
-                obj.Set("level", "wired");
-                break;
-            case SDL_JOYSTICK_POWER_MAX:
-                obj.Set("level", "max");
-                break;
-            default:
-                obj.Set("level", "unknown");
+          case SDL_JOYSTICK_POWER_EMPTY:
+            obj.Set("level", "empty");
+            break;
+          case SDL_JOYSTICK_POWER_LOW:
+            obj.Set("level", "low");
+            break;
+          case SDL_JOYSTICK_POWER_MEDIUM:
+            obj.Set("level", "medium");
+            break;
+          case SDL_JOYSTICK_POWER_FULL:
+            obj.Set("level", "full");
+            break;
+          case SDL_JOYSTICK_POWER_WIRED:
+            obj.Set("level", "wired");
+            break;
+          case SDL_JOYSTICK_POWER_MAX:
+            obj.Set("level", "max");
+            break;
+          default:
+            obj.Set("level", "unknown");
         }
         emit({Napi::String::New(env, "controller-battery-update"), obj});
         break;
