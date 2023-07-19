@@ -24,6 +24,7 @@ const gamecontroller = require('sdl2-gamecontroller/custom')(options)
 - [controller-device-removed](#controller-device-removed)
 - [controller-device-remapped](#controller-device-remapped)
 - [controller-sensor-update](#controller-sensor-update)
+- [controller-battery-update](#controller-battery-update)
 - [accelerometer:enabled](#accelerometerenabled)
 - [accelerometer:disabled](#accelerometerdisabled)
 - [gyroscope:enabled](#gyroscopeenabled)
@@ -247,7 +248,6 @@ Emitted when Game controller sensor is updated
   z: 1.527079463005066
 }
 ```
-
 An alias for this event is also emitted with the event name set to either `gyroscope` or `accelerometer`.
 
 For example:
@@ -257,6 +257,23 @@ gamecontroller.on('gyroscope', (data) =>
   console.log('gyroscope updated', data),
 );
 ```
+
+## controller-battery-update
+
+Emitted when Game controller battery is updated
+[SDL_JOYBATTERYUPDATED](https://wiki.libsdl.org/SDL2/SDL_JoystickPowerLevel)
+
+```js
+// SDL 2.0.24+
+{
+  message: 'Game controller battery was updated', 
+  which: 0,
+  timestamp: 498,
+  level: "low"
+}
+```
+- The `level` field will be one of "empty", "low", "medium", "full", "wired", "max", or "unknown".
+- The `timestamp` in milliseconds is relative to the start of node process.
 
 ## accelerometer:enabled
 

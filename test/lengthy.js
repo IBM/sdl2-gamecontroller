@@ -102,4 +102,9 @@ gamecontroller.on('controller-button-down', (data) =>
   console.log('button pressed', data),
 );
 
+// Print information about the controller battery
+gamecontroller.on('controller-battery-update', (data) =>
+  console.log('battery update', data),
+);
+
 gamecontroller.on('back', () => process.exit(0));

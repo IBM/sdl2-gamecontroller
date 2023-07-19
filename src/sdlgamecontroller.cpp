@@ -230,6 +230,17 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
       SDL_SetHint(SDL_HINT_JOYSTICK_ROG_CHAKRAM, "1");
     }
 #endif
+#if SDL_VERSION_ATLEAST(2, 0, 24)
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_SHIELD, "1");
+#endif
+#if SDL_VERSION_ATLEAST(2, 0, 26)
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_XBOX_360, "1");
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED, "1");
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS, "1");
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE, "1");
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED, "1");
+    SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED, "1");
+#endif
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER)
         < 0) {
@@ -443,6 +454,36 @@ Napi::Value SdlGameController::pollEvents(const Napi::CallbackInfo &info) {
             break;
         }
         emit({Napi::String::New(env, "controller-sensor-update"), obj});
+        break;
+#endif
+#if SDL_VERSION_ATLEAST(2, 0, 24)
+      case SDL_JOYBATTERYUPDATED:
+        obj.Set("message", "Game controller battery was updated");
+        obj.Set("timestamp", event.jbattery.timestamp);
+        obj.Set("which", static_cast<int>(event.jbattery.which));
+        switch (event.jbattery.level) {
+          case SDL_JOYSTICK_POWER_EMPTY:
+            obj.Set("level", "empty");
+            break;
+          case SDL_JOYSTICK_POWER_LOW:
+            obj.Set("level", "low");
+            break;
+          case SDL_JOYSTICK_POWER_MEDIUM:
+            obj.Set("level", "medium");
+            break;
+          case SDL_JOYSTICK_POWER_FULL:
+            obj.Set("level", "full");
+            break;
+          case SDL_JOYSTICK_POWER_WIRED:
+            obj.Set("level", "wired");
+            break;
+          case SDL_JOYSTICK_POWER_MAX:
+            obj.Set("level", "max");
+            break;
+          default:
+            obj.Set("level", "unknown");
+        }
+        emit({Napi::String::New(env, "controller-battery-update"), obj});
         break;
 #endif
         // LIMITED support for keyboard events - probably only helpful for
