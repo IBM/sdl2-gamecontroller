@@ -266,13 +266,14 @@ Emitted when Game controller battery is updated
 ```js
 // SDL 2.0.24+
 {
-  message: 'Game controller battery was updated',
-  timestamp: "tbd",
+  message: 'Game controller battery was updated', 
   which: 0,
+  timestamp: 498,
   level: "low"
 }
 ```
-The `level` field will be one of "empty", "low", "medium", "full", "wired", "max", or "unknown"
+- The `level` field will be one of "empty", "low", "medium", "full", "wired", "max", or "unknown".
+- The `timestamp` in milliseconds is relative to the start of node process.
 
 ## accelerometer:enabled
 

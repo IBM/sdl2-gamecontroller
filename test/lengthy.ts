@@ -96,7 +96,7 @@ gamecontroller.on('controller-touchpad-motion', (data) =>
   ),
 );
 
-gamecontroller.on('led', (data) => console.log('LEDS set', data));
+gamecontroller.on('led', (data) => console.log('LEDs set', data));
 
 // Respond to both up & down events
 gamecontroller.on('leftshoulder', (data) =>
@@ -108,6 +108,10 @@ gamecontroller.on('leftshoulder', (data) =>
 // Print information about a pressed button
 gamecontroller.on('controller-button-down', (data) =>
   console.log('button pressed', data),
+);
+
+gamecontroller.on('controller-battery-update', (data) =>
+  console.log('battery update', data),
 );
 
 gamecontroller.on('back', () => process.exit(0));

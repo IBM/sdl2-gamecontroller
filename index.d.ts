@@ -60,6 +60,7 @@ export type DeviceUpdated = Message & {
 export type DeviceUpdateEvents =
   | 'controller-device-removed'
   | 'controller-device-remapped';
+export type BatteryUpdateEvents = 'controller-battery-update';
 
 export type AxisType =
   | 'leftx'
@@ -103,6 +104,20 @@ export type ButtonTypeWithUpsAndDowns =
 export type ControllerButtonDown = Message &
   Player & {button: ButtonType; pressed: boolean};
 
+export type BatteryLevelType =
+  | 'empty'
+  | 'low'
+  | 'medium'
+  | 'full'
+  | 'wired'
+  | 'max'
+  | 'unknown';
+export type BatteryUpdate = Message &
+  DeviceUpdated & {
+    timestamp: number;
+    level: BatteryLevelType;
+  };
+
 export type CallBack<T = Record<string, unknown>> = (data: T) => void;
 
 type ON<TEventName, TCallBack> = (
@@ -115,6 +130,7 @@ type OnWarningCall = ON<'warning', Warning>;
 type OnSdlInitCall = ON<'sdl-init', SdlInit>;
 type OnDeviceAddedCall = ON<'controller-device-added', DeviceAdded>;
 type OnDeviceUpdated = ON<DeviceUpdateEvents, DeviceUpdated>;
+type OnBatteryUpdated = ON<BatteryUpdateEvents, BatteryUpdate>;
 type OnAxisUpdate = ON<AxisType, AxisMotionData>;
 type OnButtonPressCall = ON<ButtonTypeWithUpsAndDowns, ButtonPress>;
 type OnSensorUpdate = ON<SensorUpdateEvents, SensorUpdate>;
@@ -131,6 +147,7 @@ type AllOnOptions = OnButtonPressCall &
   OnSdlInitCall &
   OnDeviceAddedCall &
   OnDeviceUpdated &
+  OnBatteryUpdated &
   OnSensorUpdate &
   OnSensorStateChange &
   OnTouchpadUpdate &
