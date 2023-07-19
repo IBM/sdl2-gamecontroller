@@ -31,6 +31,8 @@ jobs:
       # David: next 2 lines are untested. Please remove this comment after testing.
       - run: npm version patch
       - run: git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
