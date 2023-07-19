@@ -28,6 +28,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      # David: next 2 lines are untested. Please remove this comment after testing.
+      - run: npm version patch
+      - run: git push
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
