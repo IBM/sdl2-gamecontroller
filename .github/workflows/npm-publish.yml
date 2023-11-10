@@ -31,25 +31,9 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
-      # David: next 2 lines are untested. Please remove this comment after testing.
-      - name: Setup identity
-        run: |
-          git config user.email ${{ vars.GIT_AUTHOR_EMAIL }}
-          git config user.name "${{ vars.GIT_AUTHOR_NAME }}"
-          npm config set allow-same-version true
-          npm config set git-tag-version false
-      - name: bump version
-        run: |
-          npm version patch
-          git commit -sm "bump version" package-lock.json package.json
-      - run: git push --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          GIT_AUTHOR_NAME: ${{ vars.GIT_AUTHOR_NAME }}
-          GIT_AUTHOR_EMAIL: ${{ vars.GIT_AUTHOR_EMAIL }}
 
   #publish-gpr:
   #  needs: build
