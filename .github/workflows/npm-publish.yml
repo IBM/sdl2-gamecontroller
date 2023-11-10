@@ -38,7 +38,7 @@ jobs:
           git config user.name "${{ vars.GIT_AUTHOR_NAME }}"
           npm config set allow-same-version true
       - run: npm version patch
-      - run: git push
+      - run: git push --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm publish
