@@ -27,7 +27,7 @@
   "author": "David Nixon",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^8.10.66",
+    "@types/node": "^22.15.19",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "eslint": "^8.53.0",
