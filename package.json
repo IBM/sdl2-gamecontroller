@@ -10,7 +10,7 @@
     "bindings": "^1.5.0",
     "bluebird": "^3.7.2",
     "cmake-js": "^7.3.0",
-    "node-addon-api": "^3"
+    "node-addon-api": "^8"
   },
   "description": "Game controller support for nodejs `EventEmitter` backed by SDL",
   "homepage": "https://github.com/IBM/sdl2-gamecontroller#readme",
