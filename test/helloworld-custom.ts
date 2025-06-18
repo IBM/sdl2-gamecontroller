@@ -1,8 +1,10 @@
-import customController from '../custom';
+import { createController, type Gamecontroller } from 'sdl2-gamecontroller';
 
-const gamecontroller = customController({
+console.log('\n\n===== Custom init test');
+
+const gamecontroller: Gamecontroller = createController({
   sdl_joystick_rog_chakram: true,
-  interval: 90,
+  fps: 60,
 });
 
 gamecontroller.on('error', (data) => console.log('error', data));

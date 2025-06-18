@@ -1,4 +1,6 @@
-import gamecontroller from '../index';
+import gamecontroller from 'sdl2-gamecontroller';
+
+console.log('\n\n===== TypeScript test');
 
 gamecontroller.on('error', (data) => console.log('error', data));
 gamecontroller.on('warning', (data) => console.log('warning', data));
