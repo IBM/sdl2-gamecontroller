@@ -1,9 +1,6 @@
-// const gamecontroller = require('../index')
-const gamecontroller = require('../custom')({
-  sdl_joystick_rog_chakram: true,
-  interval: 90,
-});
+import gamecontroller from 'sdl2-gamecontroller';
 
+console.log('\n\n===== ESM test');
 gamecontroller.on('error', (data) => console.log('error', data));
 gamecontroller.on('warning', (data) => console.log('warning', data));
 gamecontroller.on('sdl-init', (data) => console.log('SDL2 Initialized', data));

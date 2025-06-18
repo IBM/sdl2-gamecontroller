@@ -28,10 +28,24 @@ Found a bug or just what to let me know what you think. Open an issue on the [is
 
 # Using the library
 
+## Quick Start
+
+ESM
+```javascript
+import gamecontroller from "sdl2-gamecontroller";
+gamecontroller.on("a:down", (data) => console.log("Hello A button world"));
+```
+
+common
+```javascript
+const gamecontroller = require("sdl2-gamecontroller").default;
+gamecontroller.on("a:down", (data) => console.log("Hello A button world"));
+```
+
 ## Hello world
 
 ```js
-const gamecontroller = require("sdl2-gamecontroller");
+import gamecontroller from "sdl2-gamecontroller";
 
 gamecontroller.on("error", (data) => console.log("error", data));
 gamecontroller.on("warning", (data) => console.log("warning", data));
@@ -42,7 +56,12 @@ gamecontroller.on("a:down", (data) => console.log("Hello A button world"));
 ## Hello world with custom options
 
 ```js
-const gamecontroller = require('sdl2-gamecontroller/custom')({sdl_joystick_rog_chakram: true, fps: 25})
+import { createController } from "sdl2-gamecontroller";
+
+const gamecontroller = createController({
+    sdl_joystick_rog_chakram: true,
+    interval: 90,
+});
 
 gamecontroller.on('error', (data) => console.log('error', data));
 gamecontroller.on('warning', (data) => console.log('warning', data));
@@ -57,7 +76,7 @@ gamecontroller.on('x:down', () => process.exit(0));
 ## Lengthy example
 
 ```js
-const gamecontroller = require("sdl2-gamecontroller");
+import gamecontroller from "sdl2-gamecontroller";
 
 gamecontroller.on("error", (data) => console.log("error", data));
 gamecontroller.on("warning", (data) => console.log("warning", data));

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/sdl2-gamecontroller.iml" filepath="$PROJECT_DIR$/.idea/sdl2-gamecontroller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sdl2-gamecontroller2.iml" filepath="$PROJECT_DIR$/.idea/sdl2-gamecontroller2.iml" />
     </modules>
   </component>
 </project>

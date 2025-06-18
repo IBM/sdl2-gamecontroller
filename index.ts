@@ -1,6 +1,16 @@
-export type Message = {message: string};
-export type Player = {player?: number};
-export type Error = Message & Player & {operation: string};
+// @ts-ignore
+import { EventEmitter } from 'events';
+// @ts-ignore
+import { SdlGameController as NativeSdlGameController } from './build/Release/sdl_gamecontroller.node';
+// @ts-ignore
+import bindings from 'bindings';
+
+// Get the native binding
+const SdlGameController: typeof NativeSdlGameController = bindings('sdl_gamecontroller').SdlGameController;
+
+export type Message = { message: string };
+export type Player = { player?: number };
+export type Error = Message & Player & { operation: string };
 export type Warning = Message & {
   operation: string;
   elapsed_ms?: number;
@@ -89,10 +99,10 @@ export type ButtonType =
   | 'dpleft';
 
 export type AxisMotionData = Message &
-  Player & {button: AxisType; value: number; timestamp: number};
+  Player & { button: AxisType; value: number; timestamp: number };
 
 export type ButtonPress = Message &
-  Player & {button: ButtonType; pressed: boolean};
+  Player & { button: ButtonType; pressed: boolean };
 
 export type ButtonTypeWithUpsAndDowns =
   | `${ButtonType}:up`
@@ -102,7 +112,7 @@ export type ButtonTypeWithUpsAndDowns =
   | 'controller-button-down';
 
 export type ControllerButtonDown = Message &
-  Player & {button: ButtonType; pressed: boolean};
+  Player & { button: ButtonType; pressed: boolean };
 
 export type BatteryLevelType =
   | 'empty'
@@ -123,7 +133,7 @@ export type CallBack<T = Record<string, unknown>> = (data: T) => void;
 type ON<TEventName, TCallBack> = (
   eventName: TEventName,
   callBack: CallBack<TCallBack>,
-) => void;
+) => never;
 
 type OnErrorCall = ON<'error', Error>;
 type OnWarningCall = ON<'warning', Warning>;
@@ -155,7 +165,7 @@ type AllOnOptions = OnButtonPressCall &
   OnRumbled &
   OnRumbledTriggers;
 
-export type Gamecontroller = {
+export interface Gamecontroller extends EventEmitter {
   enableGyroscope: (enable?: boolean, player?: number) => void;
   enableAccelerometer: (enable?: boolean, player?: number) => void;
   setLeds: (
@@ -178,7 +188,40 @@ export type Gamecontroller = {
   ) => void;
   pollEvents: () => void; // internal
   on: AllOnOptions;
-};
+}
 
-declare const gamecontroller: Gamecontroller;
-export default gamecontroller;
+// Options interface
+export interface GameControllerOptions {
+  interval?: number;
+  fps?: number;
+  sdl_joystick_rog_chakram?: boolean; // additional SDL options
+}
+
+// Apply EventEmitter methods to SdlGameController
+Object.setPrototypeOf(SdlGameController.prototype, EventEmitter.prototype);
+
+// Default export (former index.js)
+const defaultController: Gamecontroller = new SdlGameController() as Gamecontroller;
+
+setInterval(() => {
+  defaultController.pollEvents();
+}, 33);
+
+export function createController(options: GameControllerOptions = {}): Gamecontroller {
+  console.log('createController options:', options);
+  const inst = new SdlGameController(options) as Gamecontroller;
+  let interval = options.interval || 33;
+
+  if (options.fps) {
+    interval = 1000 / options.fps;
+  }
+
+  console.log('poll interval: ', interval, 'ms');
+  setInterval(() => {
+    inst.pollEvents();
+  }, interval);
+
+  return inst;
+}
+
+export default defaultController;

@@ -1,2 +1,7 @@
 node_modules
 build
+*.tgz
+/test/package-lock.json
+/dist/
+/.parcel-cache/
+/.idea
