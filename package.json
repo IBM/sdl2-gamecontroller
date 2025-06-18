@@ -21,7 +21,7 @@
   "scripts": {
     "install": "cmake-js compile",
     "lint": "eslint .",
-    "eslint": "eslint --fix *.js *.ts test/*js test/*.ts",
+    "eslint": "eslint --fix .",
     "watch": "parcel watch",
     "build": "parcel build"
   },
