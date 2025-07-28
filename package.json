@@ -27,13 +27,15 @@
   },
   "dependencies": {
     "bindings": "^1.5.0",
-    "bluebird": "^3.7.2",
     "cmake-js": "^7.3.1",
     "node-addon-api": "^8.4.0"
   },
   "description": "Game controller support for nodejs `EventEmitter` backed by SDL",
   "homepage": "https://github.com/IBM/sdl2-gamecontroller#readme",
-  "repository": "https://github.com/IBM/sdl2-gamecontroller.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IBM/sdl2-gamecontroller.git"
+  },
   "engines": {
     "node": ">=8"
   },
