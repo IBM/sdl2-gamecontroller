@@ -1,17 +1,10 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
-
-name: Publish NPM and GPR
+name: Publish NPM
 
 on:
-  release:
-    types: [created]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write  # allow creating releases
   packages: write
   id-token: write
 
@@ -23,12 +16,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - run: sudo apt-get update
-      - run: sudo apt install -y build-essential cmake libsdl2-dev
-      - run: |
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt install -y build-essential cmake libsdl2-dev
+      - name: Build distribution
+        run: |
           npm ci
+          npm run build
+      - name: Save dist folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
-  publish-npm:
+  verify-package:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -36,15 +38,46 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+      - name: Get dist folder
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Check the package
+        run: ./test/verify-packed-files.sh
+
+  publish-npm:
+    needs: verify-package
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.save-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for pushing
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org/
-      - run: |
-          sudo apt-get update
-          sudo apt install -y build-essential cmake libsdl2-dev
-          npm ci
-          npm run build
-          npm publish --provenance
+      - name: Get dist folder
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+      - name: Version and Publish
+        id: save-version
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          VERSION=$(npm version patch)
+          echo "version=${VERSION#v}" >> $GITHUB_OUTPUT
+          npm publish --provenance
+          git push origin HEAD:${{ github.ref }} --follow-tags
 
   #publish-gpr:
   #  needs: build
@@ -61,3 +94,17 @@ jobs:
   #    - run: npm publish --registry=https://npm.pkg.github.com/
   #      env:
   #        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  create-release:
+    needs: publish-npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          tag_name: v${{ needs.publish-npm.outputs.version }}
