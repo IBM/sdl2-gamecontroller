@@ -25,7 +25,9 @@ jobs:
           node-version-file: '.nvmrc'
       - run: sudo apt-get update
       - run: sudo apt install -y build-essential cmake libsdl2-dev
-      - run: npm ci
+      - run: |
+          npm ci
+          npm run build
 
   publish-npm:
     needs: build
