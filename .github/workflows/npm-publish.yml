@@ -38,6 +38,8 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org/
       - run: |
+          sudo apt-get update
+          sudo apt install -y build-essential cmake libsdl2-dev
           npm ci
           npm run build
           npm publish --provenance
