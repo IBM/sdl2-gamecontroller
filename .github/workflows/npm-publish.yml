@@ -27,7 +27,6 @@ jobs:
       - run: sudo apt install -y build-essential cmake libsdl2-dev
       - run: |
           npm ci
-          npm run build
 
   publish-npm:
     needs: build
@@ -38,7 +37,10 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org/
-      - run: npm publish --provenance
+      - run: |
+          npm ci
+          npm run build
+          npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
