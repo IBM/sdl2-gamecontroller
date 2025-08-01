@@ -169,7 +169,7 @@ Full docs for the events and the functions calls
 
 # Prerequisites
 
-NOTE: If you need rumble, LED, touchpad, gyroscope, or accelerometer support, you need SDL 2.0.16+ which seems not to be available form the Ubuntu/Red Hat repos.
+NOTE: If you need rumble, LED, touchpad, gyroscope, or accelerometer support, you need SDL 2.0.16+ which seems not to be available from the Ubuntu/Red Hat repos.
 
 ## Linux **Red Hat**
 
@@ -199,7 +199,7 @@ brew install cmake sdl2
 ## Linux - Latest SDL on Linux from Homebrew
 
 [install Homebrew](https://brew.sh/)
-install git `dnf install -y git` or `apt install git`
+and git `dnf install -y git` or `apt install git`
 
 ```sh
 brew install sdl2
