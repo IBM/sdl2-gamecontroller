@@ -15,6 +15,7 @@
     "dist/**",
     "CMakeLists.txt",
     "index.ts",
+    "tsconfig.json",
     "src/**"
   ],
   "changelogUrl": "https://github.com/IBM/sdl2-gamecontroller/blob/main/RELEASENOTES.md",
